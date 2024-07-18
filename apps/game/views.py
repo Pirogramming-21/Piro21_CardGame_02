@@ -11,7 +11,7 @@ def game_detail(request, pk):
     ctx={
         'game':game, 
         'result_text':'',
-        'player1_win':None,
+        'user_win':None,
     }
 
     if game.status=='ONGOING':
@@ -28,9 +28,9 @@ def game_detail(request, pk):
             ctx['result_text']='숫자가 큰 사람이 이깁니다.'
 
         if win_condition=='LOW':
-            ctx['player1_win']=game.attacker_card < game.defender_card
+            ctx['user_win']=game.attacker_card < game.defender_card
         else:
-            ctx['player1_win']=game.attacker_card > game.defender_card
+            ctx['user_win']=game.attacker_card > game.defender_card
     
         ctx['buttons']=['전적목록']
 
