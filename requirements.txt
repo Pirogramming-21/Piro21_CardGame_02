@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 asgiref==3.8.1
 Django==5.0.7
 sqlparse==0.5.1
+=======
+asgiref==3.8.1
+Django==5.0.7
+sqlparse==0.5.1
+>>>>>>> 139da3ccd826d829b22e4166afb3e16dbb74cf98
