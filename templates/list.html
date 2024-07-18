@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h2>게임 전적</h2>
+
+<h3>내가 공격한 게임</h3>
+<ul>
+{% for game in attacks %}
+    <li>
+        vs {{ game.defender.username }} - 
+        {% if game.status == 'PENDING' %}
+            반격 대기 
+            
+            <form action="{% url 'cancel_game' game.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">취소하기</button>
+            </form>
+            
+        {% elif game.status == 'ONGOING' %}
+            게임 진행 중
+        {% elif game.status == 'FINISHED' %}
+            결과: 
+            {% if game.result == 'ATTACKER_WIN' %}
+                승리
+            {% elif game.result == 'DEFENDER_WIN' %}
+                패배
+            {% else %}
+                무승부
+            {% endif %}
+        {% elif game.status == 'CANCELLED' %}
+            취소됨
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+<h3>나를 향한 공격</h3>
+<ul>
+{% for game in defenses %}
+    <li>
+        vs {{ game.attacker.username }} - 
+        {% if game.status == 'PENDING' %}
+            <a href="{% url 'counter_attack' game.id %}">반격하기</a>
+        {% elif game.status == 'ONGOING' %}
+            게임 진행 중
+        {% elif game.status == 'FINISHED' %}
+            결과: 
+            {% if game.result == 'DEFENDER_WIN' %}
+                승리
+            {% elif game.result == 'ATTACKER_WIN' %}
+                패배
+            {% else %}
+                무승부
+            {% endif %}
+        {% elif game.status == 'CANCELLED' %}
+            취소됨
+        {% endif %}
+        <a href="{% url 'game_detail' game.id %}">[게임 정보]</a>
+    </li>
+{% endfor %}
+</ul>
+{% endblock %}
