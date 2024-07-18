@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Select Card</title>
+</head>
+
+<body>
+    <h1>Select a Card</h1>
+    <form method="post">
+        {% csrf_token %}
+        {% for card in cards %}
+        <label>
+            <input type="radio" name="selected_card" value="{{ card }}">
+            {{ card }}
+        </label>
+        {% endfor %}
+        <br>
+        <label for="defender">Defender:</label>
+        <select name="defender" id="defender" required>
+            <option value="" disabled selected>-------</option>
+            {% for user in users %}
+            <option value="{{ user.id }}">{{ user.username }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <button type="submit">Attack</button>
+    </form>
+</body>
+
+</html>
