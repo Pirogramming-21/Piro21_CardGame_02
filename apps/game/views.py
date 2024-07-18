@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Game
@@ -49,3 +50,37 @@ def counter_attack(request, game_id):
 def game_detail(request, game_id):
     game = get_object_or_404(Game, id=game_id)
     return render(request, 'detail.html', {'game': game})
+
+import random
+
+
+def game_detail(request, pk):
+    game=Game.objects.get(id=pk)
+    ctx={
+        'game':game, 
+        'result_text':'',
+        'user_win':None,
+    }
+
+    if game.status=='ONGOING':
+        ctx['result_text']='진행중...'
+        ctx['buttons']=['게임취소', '전적목록']
+    elif game.status=='PENDING':
+        ctx['buttons']=['대응하기', '전적목록']
+    elif game.status=="FINISHED":
+        win_condition=game.win_condition
+        
+        if win_condition=='LOW':
+            ctx['result_text']='숫자가 작은 사람이 이깁니다.'
+        elif win_condition=='HIGH':
+            ctx['result_text']='숫자가 큰 사람이 이깁니다.'
+
+        if win_condition=='LOW':
+            ctx['user_win']=game.attacker_card < game.defender_card
+        else:
+            ctx['user_win']=game.attacker_card > game.defender_card
+    
+        ctx['buttons']=['전적목록']
+
+    return render(request, 'detail.html', ctx)
+
