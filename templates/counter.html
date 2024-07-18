@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
+{%block title%} CounterAttack {%endblock%}
+
 {% block content %}
+
 <h2>반격하기</h2>
 <p>상대: {{ game.attacker.username }}</p>
 <form action="{% url 'counter_attack' game.id %}" method="post">
@@ -13,4 +16,5 @@
     </select>
     <button type="submit">반격</button>
 </form>
+
 {% endblock %}

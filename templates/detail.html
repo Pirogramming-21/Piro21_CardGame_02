@@ -1,12 +1,10 @@
-
 {% extends 'base.html' %}
 {% load static %}
 
-{% block head %}
-    <title>게임 상세</title>
-{% endblock %}
+{%block title%} 게임 상세 {%endblock%}
 
 {% block content %}
+
 <div>
     <h2>{{game.attacker.username}} VS {{game.defender.username}}</h2>
 
@@ -32,5 +30,5 @@
             <button>{{ button }}</button>
         {% endfor %}
 </div>
-{% endblock %}
 
+{% endblock %}

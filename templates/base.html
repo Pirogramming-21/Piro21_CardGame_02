@@ -1,23 +1,41 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>숫자 카드 게임</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  <title>{% block title %}PIRO-CARD-GAME{% endblock %}</title>
 </head>
-<body>
-    <header>
-        <!-- 헤더 내용 (예: 네비게이션 메뉴) -->
-    </header>
 
-    <main>
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Pirogrammer Card Game</a>
+            </div>
+            <ul class="nav navbar-nav">
+                {% if user.is_authenticated %}
+                <li class="nav-item"><a href="/attack">게임하기</a></li>
+                <li class="nav-item"><a href="/ranking">랭킹보기</a></li>
+                <li class="nav-item"><a href="{% url 'account_logout' %}">로그아웃</a></li>
+                {% else %}
+                <li class="nav-item"><a href="{% url 'account_login' %}">로그인</a></li>
+                <li class="nav-item"><a href="{% url 'account_signup' %}">회원가입</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
         {% block content %}
-        
         {% endblock %}
-    </main>
+    </div>
 
     <footer>
-        <!-- 푸터 내용 -->
     </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <title>Select Card</title>
-</head>
+{%block title%} Select Card {%endblock%}
 
-<body>
+{%block content%}
     <h1>Select a Card</h1>
     <form method="post">
         {% csrf_token %}
@@ -27,6 +23,5 @@
         <br>
         <button type="submit">Attack</button>
     </form>
-</body>
+{% endblock %}
 
-</html>
