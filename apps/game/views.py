@@ -55,7 +55,7 @@ import random
 
 
 def game_detail(request, game_id):
-    game=Game.objects.get(id=game_id)
+    game=get_object_or_404(Game, id=game_id)
     ctx={
         'game':game, 
         'result_text':'',

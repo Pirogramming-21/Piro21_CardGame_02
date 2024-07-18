@@ -29,7 +29,21 @@
     {% endif %}
 
         {% for button in buttons %}
-            <button>{{ button }}</button>
+            {% if button == '게임취소' %}
+            <form action="{% url 'game:cancel_game' game.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">{{ button }}</button>
+            </form>
+            {% elif button == '대응하기' %}
+                <form action="{% url 'game:counter_attack' game.id %}" method="get">
+                    {% csrf_token %}
+                    <button type="submit">{{ button }}</button>
+                </form>
+            {% elif button == '전적목록' %}
+                <form action="{% url 'game:game_history' %}" method="get">
+                    <button type="submit">{{ button }}</button>
+                </form>
+            {% endif %}
         {% endfor %}
 </div>
 {% endblock %}
