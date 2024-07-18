@@ -1,1 +1,16 @@
+{% extends 'base.html' %}
+
+{%block title%} Pirogramming Card Game {%endblock%}
+
+{%block content%}
 <h1>안녕!!!!! 나 메인페이지</h1>
+<div class="mainpage_buttons">
+    {% if user.is_authenticated %}
+    <span>{{user.username}}님이 로그인 중</span>
+    <a href="/attack" class="game_start mainpage-btn"> Start </a>
+    <a href="/game/list" class="game_list mainpage-btn"> List </a>
+    {% else %}
+    <a href="/accounts/login" class="game_start mainpage-btn"> Start </a>
+    {% endif %}
+</div>
+{% endblock %}
