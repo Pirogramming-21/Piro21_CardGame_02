@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect, get_object_or_404, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from apps.accounts.models import UserProfile
 from .models import Game
 from django.contrib.auth.models import User
 import random
@@ -108,5 +109,10 @@ def cancel_game(request, game_id):
     game.save()
     return redirect('game_history')
 
-def ranking(req):
-    return render(req, 'ranking.html')
+def ranking(request):
+    users = UserProfile.objects.all().order_by('-score')
+    ctx = {
+        'users': users,
+    }
+    return render(request, 'ranking.html', ctx)
+    
