@@ -2,7 +2,7 @@
 
 {%block title%} Ranking {%endblock%}
 
-{%block content%}
+{% block content %}
 <h1>PIRO 명예의 전당</h1>
 <table>
     <thead>
@@ -13,11 +13,11 @@
         </tr>
     </thead>
     <tbody>
-        {% for user in users %}
+        {% for user in top_users %}
             <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ user.user.username }}</td>
-                <td>{{ user.score }}</td>
+                <td>{{ forloop.counter }}</td>  <!-- 랭킹 순위 -->
+                <td>{{ user.username }}</td>     <!-- 유저명 -->
+                <td>{{ user.score }}</td>        <!-- 점수 -->
             </tr>
         {% endfor %}
     </tbody>

@@ -96,11 +96,37 @@ def counter_attack(request, pk):
         # 반격 로직 구현
         game.defender_card = int(request.POST['card'])
         game.status = 'FINISHED'
-        # 승패 결정 로직 (예시)
+
+        # 승패 결정 및 점수 계산 로직
         if game.win_condition == 'HIGH':
-            game.result = 'ATTACKER_WIN' if game.attacker_card > game.defender_card else 'DEFENDER_WIN'
+            if game.attacker_card > game.defender_card:
+                game.result = 'ATTACKER_WIN'
+                game.attacker_score = game.attacker_card
+                game.defender_score = -game.defender_card
+            elif game.attacker_card == game.defender_card:
+                game.result = 'DRAW'
+                game.attacker_score = game.defender_score = 0
+            else:
+                game.result = 'DEFENDER_WIN'
+                game.attacker_score = -game.attacker_card
+                game.defender_score = +game.defender_card
         else:
-            game.result = 'ATTACKER_WIN' if game.attacker_card < game.defender_card else 'DEFENDER_WIN'
+            if game.attacker_card < game.defender_card:
+                game.result = 'ATTACKER_WIN'
+                game.attacker_score = game.attacker_card
+                game.defender_score = -game.defender_card
+            elif game.attacker_card == game.defender_card:
+                game.result = 'DRAW'
+                game.attacker_score = game.defender_score = 0
+            else:
+                game.result = 'DEFENDER_WIN'
+                game.attacker_score = -game.attacker_card
+                game.defender_score = +game.defender_card
+        
+        game.attacker.score += game.attacker_score
+        game.defender.score += game.defender_score
+        game.attacker.save()
+        game.defender.save()
         game.save()
         return redirect('game:game_history')
     return render(request, 'counter.html', {'game': game})
@@ -115,8 +141,8 @@ def cancel_game(request, pk):
 
 
 def ranking(request):
-    users = CustomUser.objects.all().order_by('-score') 
+    top_users = CustomUser.objects.all().order_by('-score')[:3]  # 상위 3명만 가져옴
     ctx = {
-        'users': users,
+        'top_users': top_users,
     }
     return render(request, 'ranking.html', ctx)

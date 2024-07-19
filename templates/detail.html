@@ -24,6 +24,13 @@
                 <p>결과: 패배!</p>
             {% endif %}
         </p>
+        <p>점수: 
+            {% if request.user == game.attacker %}
+                {{ game.attacker_score }}
+            {% elif request.user == game.defender %}
+                {{ game.defender_score }}
+            {% endif %}
+        </p>
     {% endif %}
 
         {% for button in buttons %}
