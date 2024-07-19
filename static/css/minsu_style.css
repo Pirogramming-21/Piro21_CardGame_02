@@ -1,0 +1,119 @@
+
+@font-face {
+    font-family: 'HSSaemaul-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/HSSaemaul-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: 'HSSaemaul-Regular';
+    font-size: 2rem;
+}
+
+footer {
+    color: #777777;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: fixed;  
+    bottom: 0;       
+    left: 0;         
+    right: 0;         
+    padding: 10px;  
+    background-color: rgba(255, 255, 255, 0.8);  
+}
+
+.game-history {
+    max-width: 800px;
+    margin: 0 auto;
+    margin-bottom: 60px;
+}
+
+.game-history__title,
+.game-history__subtitle {
+    color: white;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.game-history__title {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.game-history__title > a {
+    font-size: 3rem;
+}
+
+.game-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.game-item {
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0.9;
+}
+
+.game-item__info {
+    flex-grow: 1;
+}
+
+.game-item__status {
+    font-weight: bold;
+}
+
+.game-item__result {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 3px;
+    color: white;
+}
+
+.game-item__result--win { background-color: #4CAF50; }
+.game-item__result--lose { background-color: #f44336; }
+.game-item__result--draw { background-color: #ff9800; }
+
+.btn {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-left: 10px;
+    text-decoration: none;
+    color: white;
+    border-radius: 3px;
+    font-size: 2rem;
+}
+
+.btn--cancel,
+.btn--counter { 
+    background-color: #2196F3; 
+}
+
+.btn--detail { 
+    background-color: #607D8B;
+    margin-left: auto;
+}
+
+.game-item__cancel-form {
+    display: inline;
+}
+
+body {
+    background-image: url('../images/game3.png');
+    background-size: cover;
+    background-position: center;
+    height: 100%;
+    margin: 0;
+    padding-bottom: 60px; /* footer 높이만큼 padding 추가 */
+    box-sizing: border-box; /* padding이 전체 높이에 포함되도록 설정 */
+    position: relative;
+}
