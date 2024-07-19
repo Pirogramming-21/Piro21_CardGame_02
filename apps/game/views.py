@@ -137,6 +137,9 @@ def counter_attack(request, pk):
         
         game.attacker.score += game.attacker_score
         game.defender.score += game.defender_score
+        # 로그를 추가하여 점수가 업데이트되는지 확인
+        print(f"### Attacker Score: {game.attacker.score}")
+        print(f"### Defender Score: {game.defender.score}")
         game.attacker.save()
         game.defender.save()
         game.save()
