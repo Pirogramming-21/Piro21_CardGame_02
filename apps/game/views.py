@@ -34,7 +34,7 @@ def attack(request):
             status='PENDING'                     # 게임 상태를 'PENDING'으로 설정
         )
         # 생성된 게임의 상세 페이지로 리디렉션
-        return redirect('game:detail', game_id=game.id)
+        return redirect('game:game_detail', pk=game.id)
 
     # GET 요청일 경우, 랜덤으로 생성된 카드와 사용자를 템플릿에 전달
     return render(request, 'attack.html', {'cards': cards, 'users': users})
@@ -88,8 +88,8 @@ def game_detail(request, pk):
 
 
 @login_required
-def counter_attack(request, game_id):
-    game = get_object_or_404(Game, id=game_id, defender=request.user, status='PENDING')
+def counter_attack(request, pk):
+    game = get_object_or_404(Game, id=pk, defender=request.user, status='PENDING')
     if request.method == 'POST':
         # 반격 로직 구현
         game.defender_card = int(request.POST['card'])
@@ -100,16 +100,16 @@ def counter_attack(request, game_id):
         else:
             game.result = 'ATTACKER_WIN' if game.attacker_card < game.defender_card else 'DEFENDER_WIN'
         game.save()
-        return redirect('game_history')
+        return redirect('game:game_history')
     return render(request, 'counter.html', {'game': game})
 
 
 @login_required
-def cancel_game(request, game_id):
-    game = get_object_or_404(Game, id=game_id, attacker=request.user, status='PENDING')
+def cancel_game(request, pk):
+    game = get_object_or_404(Game, id=pk, attacker=request.user, status='PENDING')
     game.status = 'CANCELLED'
     game.save()
-    return redirect('game_history')
+    return redirect('game:game_history')
 
 
 def ranking(request):

@@ -8,12 +8,12 @@
 <div>
     <h2>{{game.attacker.username}} VS {{game.defender.username}}</h2>
 
-    {% if game.status=='ONGOING' %}
+    {% if game.status == 'ONGOING' %}
         <p>{{result_text}}</p>
         <p>나: {{game.attacker_card}}</p>
-    {% elif game.status=='PENDING' %}
+    {% elif game.status == 'PENDING' %}
         <p>{{result_text}}</p>
-    {% elif game.status=='FINISHED' %}
+    {% elif game.status == 'FINISHED' %}
         <p>{{result_text}}</p>
         <p>{{game.attacker.username}}: {{game.attacker_card}}</p>
         <p>{{game.defender.username}}: {{game.defender_card}}</p>
