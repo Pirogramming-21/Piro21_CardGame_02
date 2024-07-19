@@ -3,15 +3,15 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/attack.css' %}">
-  <link rel="stylesheet" href="{% static 'css/minsu_style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/sihwan_style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/style_hwahyeon.css' %}">
-  <title>{% block title %}PIRO-CARD-GAME{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/attack.css' %}">
+    <link rel="stylesheet" href="{% static 'css/minsu_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sihwan_style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style_hwahyeon.css' %}">
+    <title>{% block title %}PIRO-CARD-GAME{% endblock %}</title>
 </head>
 
 <body>
@@ -25,7 +25,10 @@
                 <li class="nav-item"><a>안녕하세요, {{ user.username }}님</a></li>
                 <li class="nav-item"><a href="{% url 'game:ranking' %}">랭킹보기</a></li>
                 <li class="nav-item"><a href="{% url 'account_logout' %}">로그아웃</a></li>
-                {% else %}
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if not user.is_authenticated %}
                 <li class="nav-item"><a href="{% url 'account_login' %}">로그인</a></li>
                 <li class="nav-item"><a href="{% url 'account_signup' %}">회원가입</a></li>
                 {% endif %}
@@ -42,8 +45,8 @@
     </div>
 </body>
 
-    <footer>
-        <div class="footer"> Made By 피로 21기 카드게임 세션 2조</div>
-    </footer>
-    
+<footer>
+    <div class="footer"> Made By 피로 21기 카드게임 세션 2조</div>
+</footer>
+
 </html>
