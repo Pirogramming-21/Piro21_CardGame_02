@@ -9,9 +9,12 @@
 
     {% if game.status == 'ONGOING' %}
         <p>{{result_text}}</p>
-        <p>{% if request.user == game.attacker %}나{% else %}상대방{% endif %}: {{game.attacker_card}}</p>
+        <p>나: {{game.attacker_card}}</p>
     {% elif game.status == 'PENDING' %}
         <p>{{result_text}}</p>
+        {% if request.user != game.defender %}
+            <p>나: {{game.attacker_card}}</p>
+        {% endif %}
     {% elif game.status == 'FINISHED' %}
         <p>{{result_text}}</p>
         <p>{{game.attacker.username}}: {{game.attacker_card}}</p>
@@ -27,21 +30,28 @@
         </p>
     {% endif %}
 
-    {% for button in buttons %}
-        {% if button == '게임취소' %}
-            <form action="{% url 'game:cancel_game' game.id %}" method="post">
-                {% csrf_token %}
-                <button type="submit">{{ button }}</button>
-            </form>
-        {% elif button == '대응하기' %}
-            <a href="{% url 'game:counter_attack' game.id %}">
-                <button type="button">{{ button }}</button>
-            </a>
-        {% elif button == '전적목록' %}
-            <a href="{% url 'game:game_history' %}">
-                <button type="button">{{ button }}</button>
-            </a>
-        {% endif %}
-    {% endfor %}
+    {% if game.status == 'PENDING' and request.user == game.defender %}
+        <!-- '전적목록' 버튼만 보여줍니다 -->
+        <a href="{% url 'game:game_history' %}">
+            <button type="button">전적목록</button>
+        </a>
+    {% else %}
+        {% for button in buttons %}
+            {% if button == '게임취소' %}
+                <form action="{% url 'game:cancel_game' game.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">{{ button }}</button>
+                </form>
+            {% elif button == '대응하기' %}
+                <a href="{% url 'game:counter_attack' game.id %}">
+                    <button type="button">{{ button }}</button>
+                </a>
+            {% elif button == '전적목록' %}
+                <a href="{% url 'game:game_history' %}">
+                    <button type="button">{{ button }}</button>
+                </a>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 </div>
 {% endblock %}
