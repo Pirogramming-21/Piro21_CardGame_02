@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{%block title%} Ranking {%endblock%}
+
+{%block content%}
+<h1>PIRO 명예의 전당</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Rank</th>
+            <th>Username</th>
+            <th>Score</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ user.user.username }}</td>
+                <td>{{ user.score }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

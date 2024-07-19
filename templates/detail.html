@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{%block title%} 게임 상세 {%endblock%}
+
+{% block content %}
+
+<div>
+    <h2>{{game.attacker.username}} VS {{game.defender.username}}</h2>
+
+    {% if game.status == 'ONGOING' %}
+        <p>{{result_text}}</p>
+        <p>나: {{game.attacker_card}}</p>
+    {% elif game.status == 'PENDING' %}
+        <p>{{result_text}}</p>
+    {% elif game.status == 'FINISHED' %}
+        <p>{{result_text}}</p>
+        <p>{{game.attacker.username}}: {{game.attacker_card}}</p>
+        <p>{{game.defender.username}}: {{game.defender_card}}</p>
+        <p>
+            {% if user_win %}
+                <p>결과: 승리!</p>
+            {% else %}
+                <p>결과: 패배!</p>
+            {% endif %}
+        </p>
+    {% endif %}
+
+        {% for button in buttons %}
+            {% if button == '게임취소' %}
+            <form action="{% url 'game:cancel_game' game.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit">{{ button }}</button>
+            </form>
+            {% elif button == '대응하기' %}
+                <form action="{% url 'game:counter_attack' game.id %}" method="get">
+                    {% csrf_token %}
+                    <button type="submit">{{ button }}</button>
+                </form>
+            {% elif button == '전적목록' %}
+                <form action="{% url 'game:game_history' %}" method="get">
+                    <button type="submit">{{ button }}</button>
+                </form>
+            {% endif %}
+        {% endfor %}
+</div>
+
+{% endblock %}
