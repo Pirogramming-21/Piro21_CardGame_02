@@ -75,10 +75,10 @@ def game_detail(request, pk):
     }
 
     if game.status=='ONGOING':
-        ctx['result_text']='진행중...'
-        ctx['buttons']=['게임취소', '전적목록']
+        ctx['buttons']=['전적목록']
     elif game.status=='PENDING':
-        ctx['buttons']=['대응하기', '전적목록']
+        ctx['result_text']='진행중...'
+        ctx['buttons']=['전적목록']
     elif game.status=="FINISHED":
         win_condition=game.win_condition
         
