@@ -4,8 +4,8 @@
 
 {% block content %}
 <div class="attack-body">
-    <h1 class="attack-h1">Select a Card</h1>
-    <form method="post" class="attack-form">
+    <h1 style="margin-top: 0; margin-bottom: 20px;" class="attack-h1">Select a Card</h1>
+    <form method="post" class="attack-form" style="margin: 0;">
         {% csrf_token %}
         {% if messages %}
             <div class="messages">
@@ -31,5 +31,5 @@
         <br>
         <button type="submit" class="attack-button">Attack</button>
     </form>
-</>
+</div>
 {% endblock %}
