@@ -1,9 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
 class Game(models.Model):
-    attacker = models.ForeignKey(User, related_name='attacks', on_delete=models.CASCADE)
-    defender = models.ForeignKey(User, related_name='defenses', on_delete=models.CASCADE)
+    attacker = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='attacks', on_delete=models.CASCADE)
+    defender = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='defenses', on_delete=models.CASCADE)
     attacker_card = models.IntegerField(null=True)
     defender_card = models.IntegerField(null=True)
 

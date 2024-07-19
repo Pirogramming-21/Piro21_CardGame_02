@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %} Google Login {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Google을 통한 로그인</h2>
+    <p>You are about to sign in using a third-party account from Google.</p>
+    
+    <form method="post" action="">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">
+            계속
+        </button>
+    </form>
+</div>
+{% endblock %}

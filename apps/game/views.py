@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from apps.accounts.models import UserProfile
+from apps.accounts.models import CustomUser
 from .models import Game
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 import random
+
+User = get_user_model()
 
 def main(request):
     return render(request, 'main.html')
@@ -113,9 +115,8 @@ def cancel_game(request, pk):
 
 
 def ranking(request):
-    users = UserProfile.objects.all().order_by('-score')
+    users = CustomUser.objects.all().order_by('-score') 
     ctx = {
         'users': users,
     }
     return render(request, 'ranking.html', ctx)
-    
