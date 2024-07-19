@@ -115,6 +115,7 @@ import os
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
+    BASE_DIR / 'static',
     os.path.join(BASE_DIR, 'static'),
 ]
 # 추가: 정적 파일을 모을 디렉토리 (배포 시)

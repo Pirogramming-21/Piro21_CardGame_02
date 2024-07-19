@@ -1,0 +1,77 @@
+.game-history {
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif; 
+}
+
+.game-history__title,
+.game-history__subtitle {
+    color: white;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.game-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.game-item {
+    background-color: #f9f9f9;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.game-item__info {
+    flex-grow: 1;
+}
+
+.game-item__status {
+    font-weight: bold;
+}
+
+.game-item__result {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 3px;
+    color: white;
+}
+
+.game-item__result--win { background-color: #4CAF50; }
+.game-item__result--lose { background-color: #f44336; }
+.game-item__result--draw { background-color: #ff9800; }
+
+.btn {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-left: 10px;
+    text-decoration: none;
+    color: white;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.btn--cancel,
+.btn--counter { 
+    background-color: #2196F3; 
+}
+
+.btn--detail { 
+    background-color: #607D8B;
+    margin-left: auto;
+}
+
+.game-item__cancel-form {
+    display: inline;
+}
+
+body {
+    background-image: url('../images/game3.png');
+    background-size: cover;
+    background-position: center;
+}
