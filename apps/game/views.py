@@ -26,7 +26,7 @@ def cancel_game(request, game_id):
     game = get_object_or_404(Game, id=game_id, attacker=request.user, status='PENDING')
     game.status = 'CANCELLED'
     game.save()
-    return redirect('game_history')
+    return redirect('game:game_history')
 
 @login_required
 def counter_attack(request, game_id):
