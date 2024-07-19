@@ -56,6 +56,14 @@ def game_history(request):
     }
     return render(request, 'list.html', context)
 
+@login_required
+def cancel_game(request, game_id):
+    game = get_object_or_404(Game, id=game_id, attacker=request.user, status='PENDING')
+    game.status = 'CANCELLED'
+    game.save()
+    return redirect('game:game_history')
+
+
 def game_detail(request, pk):
     game=Game.objects.get(id=pk)
     ctx={
