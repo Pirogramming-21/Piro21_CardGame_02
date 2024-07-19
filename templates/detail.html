@@ -4,7 +4,7 @@
 {% block title %} 게임 상세 {% endblock %}
 
 {% block content %}
-<div class="game-detail-container detail-content-font">
+<div class="game-detail-container detail-content-font" style="height:45vh;">
     <h2>{{game.attacker.username}} VS {{game.defender.username}}</h2>
 
     {% if game.status == 'ONGOING' %}
