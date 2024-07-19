@@ -3,25 +3,26 @@
 {%block title%} Select Card {%endblock%}
 
 {%block content%}
-    <h1>Select a Card</h1>
-    <form method="post">
+<body class="attack-body">
+    <h1 class="attack-h1">Select a Card</h1>
+    <form method="post" class="attack-form">
         {% csrf_token %}
         {% for card in cards %}
-        <label>
+        <label class="attack-label">
             <input type="radio" name="selected_card" value="{{ card }}">
             {{ card }}
         </label>
         {% endfor %}
         <br>
         <label for="defender">Defender:</label>
-        <select name="defender" id="defender" required>
+        <select name="defender" id="defender" class="attack-select" required>
             <option value="" disabled selected>-------</option>
             {% for user in users %}
             <option value="{{ user.id }}">{{ user.username }}</option>
             {% endfor %}
         </select>
         <br>
-        <button type="submit">Attack</button>
+        <button type="submit" class="attack-button">Attack</button>
     </form>
+</body>
 {% endblock %}
-
