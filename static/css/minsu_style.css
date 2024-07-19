@@ -27,6 +27,7 @@ footer {
 .game-history {
     max-width: 800px;
     margin: 0 auto;
+    margin-bottom: 60px;
 }
 
 .game-history__title,
@@ -106,4 +107,9 @@ body {
     background-image: url('../images/game3.png');
     background-size: cover;
     background-position: center;
+    height: 100%;
+    margin: 0;
+    padding-bottom: 60px; /* footer 높이만큼 padding 추가 */
+    box-sizing: border-box; /* padding이 전체 높이에 포함되도록 설정 */
+    position: relative;
 }
