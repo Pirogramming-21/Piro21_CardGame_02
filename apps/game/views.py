@@ -56,6 +56,14 @@ def game_history(request):
     }
     return render(request, 'list.html', context)
 
+@login_required
+def cancel_game(request, pk):
+    game = get_object_or_404(Game, id=pk, attacker=request.user, status='PENDING')
+    game.status = 'CANCELLED'
+    game.save()
+    return redirect('game:game_history')
+
+
 def game_detail(request, pk):
     game=Game.objects.get(id=pk)
     ctx={
@@ -86,6 +94,10 @@ def game_detail(request, pk):
 
     return render(request, 'detail.html', ctx)
 
+import random
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
+from .models import Game
 
 @login_required
 def counter_attack(request, pk):
@@ -101,15 +113,15 @@ def counter_attack(request, pk):
             game.result = 'ATTACKER_WIN' if game.attacker_card < game.defender_card else 'DEFENDER_WIN'
         game.save()
         return redirect('game:game_history')
-    return render(request, 'counter.html', {'game': game})
-
-
-@login_required
-def cancel_game(request, pk):
-    game = get_object_or_404(Game, id=pk, attacker=request.user, status='PENDING')
-    game.status = 'CANCELLED'
-    game.save()
-    return redirect('game:game_history')
+    
+    # 1부터 10까지의 숫자 중 랜덤하게 5개 선택
+    random_numbers = random.sample(range(1, 11), 5)
+    
+    context = {
+        'game': game,
+        'random_numbers': random_numbers,
+    }
+    return render(request, 'counter.html', context)
 
 
 def ranking(request):
