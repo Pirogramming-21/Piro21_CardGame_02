@@ -119,3 +119,51 @@ body {
     position: relative;
 }
 
+.attack-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.attack-h1 {
+    color: white;  /* 배경이 어두운 경우 글자색을 흰색으로 변경 */
+    font-size: 60px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.attack-form {
+    background-color: rgb(252, 248, 248); 
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    margin: 50px auto;
+    text-align: center;
+}
+
+.attack-label, .attack-select, .attack-button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.attack-select {
+    padding: 5px;
+    font-size: 1em;
+}
+
+.attack-button {
+    background-color: #ff4500;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+.attack-button:hover {
+    background-color: #ff6347; 
+}
