@@ -43,6 +43,10 @@ footer {
     flex-direction: row;
 }
 
+.game-history__title > a {
+    font-size: 3rem;
+}
+
 .game-list {
     list-style-type: none;
     padding: 0;
