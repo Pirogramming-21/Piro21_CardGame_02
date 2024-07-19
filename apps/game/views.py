@@ -10,6 +10,8 @@ User = get_user_model()
 def main(request):
     return render(request, 'main.html')
 
+from django.contrib import messages
+
 def attack(request):
     # Generate 5 random cards
     cards = random.sample(range(1, 11), 5)
@@ -18,9 +20,17 @@ def attack(request):
 
     if request.method == 'POST':
         # 사용자가 선택한 카드 번호를 가져옴
-        selected_card_number = int(request.POST.get('selected_card'))
-        # 선택한 수비자 ID를 가져옴
-        defender_id = int(request.POST.get('defender'))
+        selected_card_number = request.POST.get('selected_card')
+        defender_id = request.POST.get('defender')
+
+        if not selected_card_number or not defender_id:
+            messages.error(request, "공격 카드와 수비자를 모두 선택해야 합니다.")
+            return render(request, 'attack.html', {'cards': cards, 'users': users})
+
+        # 선택한 카드 번호와 수비자 ID를 정수로 변환
+        selected_card_number = int(selected_card_number)
+        defender_id = int(defender_id)
+        
         # 해당 ID의 사용자가 존재하는지 확인하고 가져옴
         defender = get_object_or_404(User, id=defender_id)
 
@@ -137,9 +147,6 @@ def counter_attack(request, pk):
         
         game.attacker.score += game.attacker_score
         game.defender.score += game.defender_score
-        # 로그를 추가하여 점수가 업데이트되는지 확인
-        print(f"### Attacker Score: {game.attacker.score}")
-        print(f"### Defender Score: {game.defender.score}")
         game.attacker.save()
         game.defender.save()
         game.save()
