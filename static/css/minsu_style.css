@@ -109,11 +109,13 @@ footer {
 
 body {
     background-image: url('../images/game3.png');
-    background-size: cover;
-    background-position: center;
-    height: 100%;
+    background-size: cover; /* 이미지가 요소의 크기에 맞게 채워지도록 설정 */
+    background-position: center center; /* 이미지를 요소의 중앙에 배치 */
+    background-repeat: no-repeat; /* 이미지를 반복하지 않도록 설정 */
+    background-attachment: fixed; /* 페이지 스크롤 시 배경이 고정되도록 설정 (선택 사항) */
     margin: 0;
     padding-bottom: 60px; /* footer 높이만큼 padding 추가 */
     box-sizing: border-box; /* padding이 전체 높이에 포함되도록 설정 */
     position: relative;
 }
+
