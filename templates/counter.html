@@ -6,7 +6,7 @@
 
 <h2>반격하기</h2>
 <p>상대: {{ game.attacker.username }}</p>
-<form action="{% url 'counter_attack' game.id %}" method="post">
+<form action="{% url 'game:counter_attack' game.id %}" method="post">
     {% csrf_token %}
     <label for="card">카드 선택:</label>
     <select name="card" id="card">

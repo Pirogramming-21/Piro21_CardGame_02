@@ -101,7 +101,7 @@ def counter_attack(request, game_id):
             game.result = 'ATTACKER_WIN' if game.attacker_card < game.defender_card else 'DEFENDER_WIN'
         game.save()
         return redirect('game_history')
-    return render(request, 'counter_attack.html', {'game': game})
+    return render(request, 'counter.html', {'game': game})
 
 
 @login_required
