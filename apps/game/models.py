@@ -1,11 +1,13 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
 class Game(models.Model):
-    attacker = models.ForeignKey(User, related_name='attacks', on_delete=models.CASCADE)
-    defender = models.ForeignKey(User, related_name='defenses', on_delete=models.CASCADE)
+    attacker = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='attacks', on_delete=models.CASCADE)
+    defender = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='defenses', on_delete=models.CASCADE)
     attacker_card = models.IntegerField(null=True)
     defender_card = models.IntegerField(null=True)
+    attacker_score = models.IntegerField(default=0) # 공격자 게임 점수 추가
+    defender_score = models.IntegerField(default=0) # 수비자 게임 점수 추가
 
     STATUS_CHOICES = [
         ('PENDING', '반격 대기'),

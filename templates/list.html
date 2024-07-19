@@ -1,88 +1,30 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{%block title%} 게임 전적 {%endblock%}
+{% block title %}Game History{% endblock %}
 
 {% block content %}
-<style>
-    .game-history {
-        max-width: 800px;
-        margin: 0 auto;
-        font-family: Arial, sans-serif;
-    }
-    h2, h3 {
-        color: #333;
-        border-bottom: 2px solid #ddd;
-        padding-bottom: 10px;
-    }
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-    li {
-        background-color: #f9f9f9;
-        margin-bottom: 10px;
-        padding: 15px;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .game-info {
-        flex-grow: 1;
-    }
-    .game-status {
-        font-weight: bold;
-    }
-    .game-result {
-        display: inline-block;
-        padding: 5px 10px;
-        border-radius: 3px;
-        color: white;
-    }
-    .win { background-color: #4CAF50; }
-    .lose { background-color: #f44336; }
-    .draw { background-color: #ff9800; }
-    .button, .link {
-        display: inline-block;
-        padding: 5px 10px;
-        margin-left: 10px;
-        text-decoration: none;
-        color: white;
-        border-radius: 3px;
-        font-size: 0.9em;
-    }
-    .button { background-color: #2196F3; }
-    .link { 
-        background-color: #607D8B;
-        margin-left: auto;
-    }
-    .cancel-form {
-        display: inline;
-    }
-</style>
-
 <div class="game-history">
-    <h2>게임 전적</h2>
+    <h2 class="game-history__title">🃏 {{ user.username }}'s History 🃏 <a href="/game/attack/" style="text-decoration: none; color: white;">⚔️ Go to Attack ⚔️</a></h2>
 
-    <h3>내가 공격한 게임</h3>
-    <ul>
+    <h3 class="game-history__subtitle">⚔️ My Attack ⚔️</h3>
+
+    <ul class="game-list">
     {% for game in attacks %}
-        <li>
-            <div class="game-info">
-                vs {{ game.defender.username }} - 
-                <span class="game-status">
+        <li class="game-item">
+            <div class="game-item__info">
+                <span class="game-item__opponent">vs {{ game.defender.username }}</span> - 
+                <span class="game-item__status">
                 {% if game.status == 'PENDING' %}
                     진행중... 
-                    <form class="cancel-form" action="{% url 'game:cancel_game' game.id %}" method="post">
+                    <form class="game-item__cancel-form" action="{% url 'game:cancel_game' game.id %}" method="post">
                         {% csrf_token %}
-                        <button class="button" type="submit">취소하기</button>
+                        <button class="btn btn--cancel" type="submit">취소하기</button>
                     </form>
                 {% elif game.status == 'ONGOING' %}
                     게임 진행 중
                 {% elif game.status == 'FINISHED' %}
-                    결과: 
-                    <span class="game-result {% if game.result == 'ATTACKER_WIN' %}win{% elif game.result == 'DEFENDER_WIN' %}lose{% else %}draw{% endif %}">
+                    <span class="game-item__result {% if game.result == 'ATTACKER_WIN' %}game-item__result--win{% elif game.result == 'DEFENDER_WIN' %}game-item__result--lose{% else %}game-item__result--draw{% endif %}">
                     {% if game.result == 'ATTACKER_WIN' %}
                         승리
                     {% elif game.result == 'DEFENDER_WIN' %}
@@ -96,25 +38,24 @@
                 {% endif %}
                 </span>
             </div>
-            <a class="link" href="{% url 'game:game_detail' game.id %}">[게임 정보]</a>
+            <a class="btn btn--detail" href="{% url 'game:game_detail' game.id %}">More</a>
         </li>
     {% endfor %}
     </ul>
 
-    <h3>나를 향한 공격</h3>
-    <ul>
+    <h3 class="game-history__subtitle">🛡️ My Defence 🛡️</h3>
+    <ul class="game-list">
     {% for game in defenses %}
-        <li>
-            <div class="game-info">
-                vs {{ game.attacker.username }} - 
-                <span class="game-status">
+        <li class="game-item">
+            <div class="game-item__info">
+                <span class="game-item__opponent">vs {{ game.attacker.username }}</span> - 
+                <span class="game-item__status">
                 {% if game.status == 'PENDING' %}
-                    공격받는 중입니다! <a class="button" href="{% url 'game:counter_attack' game.id %}">반격하기</a>
+                    공격받는 중입니다! <a class="btn btn--counter" href="{% url 'game:counter_attack' game.id %}">반격하기</a>
                 {% elif game.status == 'ONGOING' %}
                     게임 진행 중
                 {% elif game.status == 'FINISHED' %}
-                    결과: 
-                    <span class="game-result {% if game.result == 'DEFENDER_WIN' %}win{% elif game.result == 'ATTACKER_WIN' %}lose{% else %}draw{% endif %}">
+                    <span class="game-item__result {% if game.result == 'DEFENDER_WIN' %}game-item__result--win{% elif game.result == 'ATTACKER_WIN' %}game-item__result--lose{% else %}game-item__result--draw{% endif %}">
                     {% if game.result == 'DEFENDER_WIN' %}
                         승리
                     {% elif game.result == 'ATTACKER_WIN' %}
@@ -128,7 +69,7 @@
                 {% endif %}
                 </span>
             </div>
-            <a class="link" href="{% url 'game:game_detail' game.id %}">[게임 정보]</a>
+            <a class="btn btn--detail" href="{% url 'game:game_detail' game.id %}">More</a>
         </li>
     {% endfor %}
     </ul>

@@ -1,48 +1,67 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{%block title%} 게임 상세 {%endblock%}
+{% block title %} 게임 상세 {% endblock %}
 
 {% block content %}
-
-<div>
+<div class="game-detail-container detail-content-font">
     <h2>{{game.attacker.username}} VS {{game.defender.username}}</h2>
 
     {% if game.status == 'ONGOING' %}
-        <p>{{result_text}}</p>
-        <p>나: {{game.attacker_card}}</p>
+        <p class="result-text">{{result_text}}</p>
+        <p>나: {{game.attacker_card}}😊</p>
     {% elif game.status == 'PENDING' %}
-        <p>{{result_text}}</p>
+        {% if request.user != game.attacker %}
+            <p class="result-text">{{result_text}}</p>
+            <p>공격을 받았습니다.<br>대응하려면 반격하기를 선택하세요.🥊</p>
+            <a class="button-counter_attack" style="background-color: rgb(235, 213, 14);" href="{% url 'game:counter_attack' game.id %}">반격하기</a>
+        {% endif %}
+        {% if request.user != game.defender %}
+            <p class="result-text">{{result_text}}</p>
+            <p>나: {{game.attacker_card}}😊<p>
+                <a class="button-cancel" style="background-color: lightgrey;" href="{% url 'game:cancel_game' game.id %}">취소하기</a>
+        {% endif %}
     {% elif game.status == 'FINISHED' %}
-        <p>{{result_text}}</p>
+        <p class="result-text">{{result_text}}</p>
         <p>{{game.attacker.username}}: {{game.attacker_card}}</p>
-        <p>{{game.defender.username}}: {{game.defender_card}}</p>
+        <p class="card-num">{{game.defender.username}}: {{game.defender_card}}</p>
         <p>
-            {% if user_win %}
-                <p>결과: 승리!</p>
+            {% if game.result == 'DRAW' %}
+                결과:<span class="game-result draw">무승부😅</span>
+            {% elif request.user == game.attacker and game.result == 'ATTACKER_WIN' or request.user == game.defender and game.result == 'DEFENDER_WIN' %}
+                결과:<span class="game-result win">승리🥳🎉</span>
             {% else %}
-                <p>결과: 패배!</p>
+                결과:<span class="game-result lose">패배🥹🙏</span>
             {% endif %}
         </p>
+        <p>점수: 
+            {% if request.user == game.attacker %}
+                {{ game.attacker_score }}
+            {% elif request.user == game.defender %}
+                {{ game.defender_score }}
+            {% endif %}
+        </p>
+    {% elif game.status == 'CANCELLED' %}
+        <p class="result-text">종료된 게임!✖️</p>
+        <a class="button" href="{% url 'game:game_history' %}">전적목록</a>
     {% endif %}
 
+    {% if game.status == 'PENDING' and request.user == game.defender %}
+        <a class="button" href="{% url 'game:game_history' %}">전적목록</a>
+    {% else %}
         {% for button in buttons %}
             {% if button == '게임취소' %}
-            <form action="{% url 'game:cancel_game' game.id %}" method="post">
-                {% csrf_token %}
-                <button type="submit">{{ button }}</button>
-            </form>
-            {% elif button == '대응하기' %}
-                <form action="{% url 'game:counter_attack' game.id %}" method="get">
+                <form action="{% url 'game:cancel_game' game.id %}" method="post" style="display:inline;">
                     {% csrf_token %}
-                    <button type="submit">{{ button }}</button>
+                    <button class="button" type="submit">{{ button }}</button>
                 </form>
+            {% elif button == '대응하기' %}
+                <a class="button" href="{% url 'game:counter_attack' game.id %}">{{ button }}</a>
             {% elif button == '전적목록' %}
-                <form action="{% url 'game:game_history' %}" method="get">
-                    <button type="submit">{{ button }}</button>
-                </form>
+                <a class="button" href="{% url 'game:game_history' %}">{{ button }}</a>
             {% endif %}
         {% endfor %}
+    {% endif %}
 </div>
-
 {% endblock %}
+

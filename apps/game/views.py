@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from apps.accounts.models import UserProfile
+from apps.accounts.models import CustomUser
 from .models import Game
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 import random
+
+User = get_user_model()
 
 def main(request):
     return render(request, 'main.html')
@@ -56,6 +58,14 @@ def game_history(request):
     }
     return render(request, 'list.html', context)
 
+@login_required
+def cancel_game(request, pk):
+    game = get_object_or_404(Game, id=pk, attacker=request.user, status='PENDING')
+    game.status = 'CANCELLED'
+    game.save()
+    return redirect('game:game_history')
+
+
 def game_detail(request, pk):
     game=Game.objects.get(id=pk)
     ctx={
@@ -65,10 +75,10 @@ def game_detail(request, pk):
     }
 
     if game.status=='ONGOING':
-        ctx['result_text']='진행중...'
-        ctx['buttons']=['게임취소', '전적목록']
+        ctx['buttons']=['전적목록']
     elif game.status=='PENDING':
-        ctx['buttons']=['대응하기', '전적목록']
+        ctx['result_text']='진행중...'
+        ctx['buttons']=['전적목록']
     elif game.status=="FINISHED":
         win_condition=game.win_condition
         
@@ -86,6 +96,10 @@ def game_detail(request, pk):
 
     return render(request, 'detail.html', ctx)
 
+import random
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, redirect, render
+from .models import Game
 
 @login_required
 def counter_attack(request, pk):
@@ -94,28 +108,53 @@ def counter_attack(request, pk):
         # 반격 로직 구현
         game.defender_card = int(request.POST['card'])
         game.status = 'FINISHED'
-        # 승패 결정 로직 (예시)
+
+        # 승패 결정 및 점수 계산 로직
         if game.win_condition == 'HIGH':
-            game.result = 'ATTACKER_WIN' if game.attacker_card > game.defender_card else 'DEFENDER_WIN'
+            if game.attacker_card > game.defender_card:
+                game.result = 'ATTACKER_WIN'
+                game.attacker_score = game.attacker_card
+                game.defender_score = -game.defender_card
+            elif game.attacker_card == game.defender_card:
+                game.result = 'DRAW'
+                game.attacker_score = game.defender_score = 0
+            else:
+                game.result = 'DEFENDER_WIN'
+                game.attacker_score = -game.attacker_card
+                game.defender_score = +game.defender_card
         else:
-            game.result = 'ATTACKER_WIN' if game.attacker_card < game.defender_card else 'DEFENDER_WIN'
+            if game.attacker_card < game.defender_card:
+                game.result = 'ATTACKER_WIN'
+                game.attacker_score = game.attacker_card
+                game.defender_score = -game.defender_card
+            elif game.attacker_card == game.defender_card:
+                game.result = 'DRAW'
+                game.attacker_score = game.defender_score = 0
+            else:
+                game.result = 'DEFENDER_WIN'
+                game.attacker_score = -game.attacker_card
+                game.defender_score = +game.defender_card
+        
+        game.attacker.score += game.attacker_score
+        game.defender.score += game.defender_score
+        game.attacker.save()
+        game.defender.save()
         game.save()
         return redirect('game:game_history')
-    return render(request, 'counter.html', {'game': game})
-
-
-@login_required
-def cancel_game(request, pk):
-    game = get_object_or_404(Game, id=pk, attacker=request.user, status='PENDING')
-    game.status = 'CANCELLED'
-    game.save()
-    return redirect('game:game_history')
+    
+    # 1부터 10까지의 숫자 중 랜덤하게 5개 선택
+    random_numbers = random.sample(range(1, 11), 5)
+    
+    context = {
+        'game': game,
+        'random_numbers': random_numbers,
+    }
+    return render(request, 'counter.html', context)
 
 
 def ranking(request):
-    users = UserProfile.objects.all().order_by('-score')
+    top_users = CustomUser.objects.all().order_by('-score')[:3]  # 상위 3명만 가져옴
     ctx = {
-        'users': users,
+        'top_users': top_users,
     }
     return render(request, 'ranking.html', ctx)
-    

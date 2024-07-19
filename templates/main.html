@@ -1,16 +1,26 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{%block title%} Pirogramming Card Game {%endblock%}
+{% block title %}Pirogramming Card Game{% endblock %}
 
-{%block content%}
-<h1>안녕!!!!! 나 메인페이지</h1>
-<div class="mainpage_buttons">
-    {% if user.is_authenticated %}
-    <span>{{user.username}}님이 로그인 중!</span>
-    <a href="{% url 'game:attack' %}" class="game_start mainpage-btn"> Start </a>
-    <a href="{% url 'game:game_history' %}" class="game_list mainpage-btn"> List </a>
-    {% else %}
-    <a href="{% url 'account_login' %}" class="game_start mainpage-btn"> Start </a>
-    {% endif %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/main_style.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <h1 class="main-title">Piro Card Game</h1>
+    <div class="mainpage-content">
+        {% if user.is_authenticated %}
+        <p class="user-greeting">안녕하세요, <span class="username">{{user.username}}</span>님!</p>
+        <div class="mainpage-buttons">
+            <a href="{% url 'game:attack' %}" class="mainpage-btn start-btn">게임 시작</a>
+            <a href="{% url 'game:game_history' %}" class="mainpage-btn list-btn">게임 목록</a>
+        </div>
+        {% else %}
+        <p class="login-message">게임을 시작하려면 로그인하세요</p>
+        <a href="{% url 'account_login' %}" class="mainpage-btn login-btn">로그인</a>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}
