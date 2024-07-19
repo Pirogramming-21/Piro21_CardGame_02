@@ -1,0 +1,71 @@
+@font-face {
+    font-family: 'HSSaemaul-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/HSSaemaul-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.game-detail-container {
+    width: 43vh;
+    height: 40vh;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+    font-family: Arial, sans-serif;
+    color: black;
+    text-align: center;
+    font-family: 'HSSaemaul-Regular';
+}
+.game-detail-container h2 {
+    color: black;
+    border-bottom: 3px solid #ddd;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 40px;
+}
+.game-detail-container p {
+    color: black;
+    font-size:23px;
+}
+.game-detail-container .result-text {
+    font-weight: bold;
+    font-size: 23px;
+    margin-top: 25px;
+}
+.result-text, .card-num {
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+.game-detail-container .game-result {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 3px;
+    color: black;
+}
+.button, .button-counter_attack, .button-cancel {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 5px;
+    text-decoration: none;
+    color: black;
+    border-radius: 13px;
+    font-size: 18px;
+    background-color: #FF7F00;
+}
+.button:hover{
+    background-color: #e69500;
+    text-decoration: none;
+    color:black;
+}
+.button-counter_attack:hover{
+    background-color: #aeb10a;
+    text-decoration: none;
+    color:black;
+}
+.button-cancel:hover {
+    background-color: rgb(77, 73, 73);
+    text-decoration: none;
+    color:black;
+}
