@@ -14,9 +14,6 @@ def game_history(request):
     
     # 사용자가 수비자인 게임
     defenses = Game.objects.filter(defender=request.user).order_by('-id')
-
-    # print("Attacks:", attacks.count())
-    # print("Defenses:", defenses.count())
     
     context = {
         'attacks': attacks,

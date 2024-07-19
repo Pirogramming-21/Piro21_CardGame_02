@@ -19,9 +19,15 @@ class Game(models.Model):
         ('LOW', 'Lower number wins'),
     ]
 
+    RESULT_CHOICES = [
+        ('ATTACKER_WIN', 'Attacker Win'),
+        ('DEFENDER_WIN', 'Defender Win'),
+        ('DRAW', 'Draw'),
+    ]
+
     win_condition = models.CharField(max_length=4, choices=WIN_CONDITION_CHOICES, null=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='PENDING')
-    result = models.CharField(max_length=20, null=True, blank=True)
+    result = models.CharField(max_length=20, choices=RESULT_CHOICES, null=True, blank=True)
 
     def __str__(self):
         return f"Game {self.id}: {self.attacker.username} vs {self.defender.username}"
