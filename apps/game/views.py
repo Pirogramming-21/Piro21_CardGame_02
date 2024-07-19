@@ -42,13 +42,7 @@ def counter_attack(request, game_id):
             game.result = 'ATTACKER_WIN' if game.attacker_card < game.defender_card else 'DEFENDER_WIN'
         game.save()
         return redirect('game_history')
-    return render(request, 'counter_attack.html', {'game': game})
-
-def game_detail(request, game_id):
-    game = get_object_or_404(Game, id=game_id)
-    return render(request, 'detail.html', {'game': game})
-
-import random
+    return render(request, 'counter.html', {'game': game})
 
 
 def game_detail(request, pk):
