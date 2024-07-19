@@ -104,14 +104,6 @@ def counter_attack(request, pk):
     return render(request, 'counter.html', {'game': game})
 
 
-@login_required
-def cancel_game(request, pk):
-    game = get_object_or_404(Game, id=pk, attacker=request.user, status='PENDING')
-    game.status = 'CANCELLED'
-    game.save()
-    return redirect('game:game_history')
-
-
 def ranking(request):
     users = UserProfile.objects.all().order_by('-score')
     ctx = {
