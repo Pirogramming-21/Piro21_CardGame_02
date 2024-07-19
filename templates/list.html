@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}게임 전적{% endblock %}
+{% block title %}Game History{% endblock %}
 
 {% block content %}
 <div class="game-history">
-    <h2 class="game-history__title">🃏 {{ user.username }}의 게임 전적 🃏 <a href="/game/attack/" style="text-decoration: none; color: white;">⚔️ 공격하러 가기 ⚔️</a></h2>
+    <h2 class="game-history__title">🃏 {{ user.username }}'s History 🃏 <a href="/game/attack/" style="text-decoration: none; color: white;">⚔️ Go to Attack ⚔️</a></h2>
 
-    <h3 class="game-history__subtitle">⚔️ 나의 공격 ⚔️</h3>
+    <h3 class="game-history__subtitle">⚔️ My Attack ⚔️</h3>
 
     <ul class="game-list">
     {% for game in attacks %}
@@ -38,12 +38,12 @@
                 {% endif %}
                 </span>
             </div>
-            <a class="btn btn--detail" href="{% url 'game:game_detail' game.id %}">게임 정보</a>
+            <a class="btn btn--detail" href="{% url 'game:game_detail' game.id %}">More</a>
         </li>
     {% endfor %}
     </ul>
 
-    <h3 class="game-history__subtitle">🛡️ 나의 방어 🛡️</h3>
+    <h3 class="game-history__subtitle">🛡️ My Defence 🛡️</h3>
     <ul class="game-list">
     {% for game in defenses %}
         <li class="game-item">
@@ -69,7 +69,7 @@
                 {% endif %}
                 </span>
             </div>
-            <a class="btn btn--detail" href="{% url 'game:game_detail' game.id %}">게임 정보</a>
+            <a class="btn btn--detail" href="{% url 'game:game_detail' game.id %}">More</a>
         </li>
     {% endfor %}
     </ul>

@@ -1,7 +1,19 @@
+
+@font-face {
+    font-family: 'HSSaemaul-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/HSSaemaul-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    font-family: 'HSSaemaul-Regular';
+    font-size: 2rem;
+}
+
 .game-history {
     max-width: 800px;
     margin: 0 auto;
-    font-family: Arial, sans-serif; 
 }
 
 .game-history__title,
@@ -60,7 +72,7 @@
     text-decoration: none;
     color: white;
     border-radius: 3px;
-    font-size: 0.9em;
+    font-size: 2rem;
 }
 
 .btn--cancel,
