@@ -1,0 +1,27 @@
+/* logout */
+.logout-container {
+    height: 25vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.logout-container h2, .logout-container p {
+    color: black;
+}
+
+.logout-button {
+    background-color: #ff6b6b;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #e63946; /* Darker shade on hover */
+}
