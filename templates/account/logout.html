@@ -3,12 +3,12 @@
 {%block title%} Logout {%endblock%}
 
 {% block content %}
-<div class="container">
+<div class="logout-container" style="height: 25vh;">
     <h2>Logout</h2>
     <p>정말 로그아웃 하시겠습니까?</p>
     <form method="post" action="{% url 'account_logout' %}">
         {% csrf_token %}
-        <button type="submit" class="btn btn-primary">Logout</button>
+        <button type="submit" class="btn btn-primary logout-button">Logout</button>
     </form>
 </div>
 {% endblock %}

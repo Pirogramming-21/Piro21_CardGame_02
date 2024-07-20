@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from apps.accounts.models import CustomUser
 from .models import Game
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 import random
 
 User = get_user_model()
@@ -10,6 +11,7 @@ User = get_user_model()
 def main(request):
     return render(request, 'main.html')
 
+@login_required
 def attack(request):
     # Generate 5 random cards
     cards = random.sample(range(1, 11), 5)
@@ -17,10 +19,23 @@ def attack(request):
     users = User.objects.exclude(id=request.user.id)
 
     if request.method == 'POST':
-        # 사용자가 선택한 카드 번호를 가져옴
-        selected_card_number = int(request.POST.get('selected_card'))
-        # 선택한 수비자 ID를 가져옴
-        defender_id = int(request.POST.get('defender'))
+        # 사용자가 선택한 카드 번호와 수비자를 가져옴
+        selected_card_number = request.POST.get('selected_card')
+        defender_id = request.POST.get('defender')
+
+        # 카드 번호와 수비자가 선택되지 않았을 경우 예외처리
+        if not selected_card_number:
+            messages.error(request, "공격 카드를 선택해야 합니다.")
+            return render(request, 'attack.html', {'cards': cards, 'users': users})
+
+        if not defender_id:
+            messages.error(request, "수비자를 선택해야 합니다.")
+            return render(request, 'attack.html', {'cards': cards, 'users': users})
+
+        # 선택한 카드 번호와 수비자 ID를 정수로 변환
+        selected_card_number = int(selected_card_number)
+        defender_id = int(defender_id)
+        
         # 해당 ID의 사용자가 존재하는지 확인하고 가져옴
         defender = get_object_or_404(User, id=defender_id)
 

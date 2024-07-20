@@ -5,25 +5,23 @@
 {%block title%} Login {%endblock%}
 
 {% block content %}
-<div class="container">
+<div class="login-container">
     <h2>Login</h2>
     <form method="post" action="{% url 'account_login' %}">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Login</button>
+        <button type="submit" class="btn btn-primary" style="margin-left: 0; width: 100%;">Login</button>
     </form>
     <hr>
-</div>
-<div class="social-login">
-<a href="{% provider_login_url 'google' %}" class="btn btn-block btn-social">
-	구글 로그인
-</a>
-<a href="{% provider_login_url 'kakao' %}" class="btn btn-block btn-social">
-	카카오 로그인
-</a>
-<a href="{% provider_login_url 'github' %}" class="btn btn-block btn-social">
-	깃허브 로그인
-</a>
-
-</div>
+    <div class="social-login">
+        <a href="{% provider_login_url 'google' %}" class="btn btn-block btn-social">
+            구글 로그인
+        </a>
+        <a href="{% provider_login_url 'kakao' %}" class="btn btn-block btn-social">
+            카카오 로그인
+        </a>
+        <a href="{% provider_login_url 'github' %}" class="btn btn-block btn-social">
+            깃허브 로그인
+        </a>
+    </div>
 {% endblock %}
