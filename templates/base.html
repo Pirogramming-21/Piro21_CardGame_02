@@ -20,7 +20,7 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">Pirogrammer Card Game</a>
             </div>
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
                 <li class="nav-item"><a>안녕하세요, {{ user.username }}님</a></li>
                 <li class="nav-item"><a href="{% url 'game:ranking' %}">랭킹보기</a></li>

@@ -7,7 +7,6 @@
 
 .game-detail-container {
     width: 43vh;
-    height: 40vh;
     margin: 50px auto;
     padding: 20px;
     background-color: #f5f5f5;
@@ -17,6 +16,10 @@
     color: black;
     text-align: center;
     font-family: 'HSSaemaul-Regular';
+    
+    height: auto;
+    display: flex;
+    flex-direction: column;
 }
 .game-detail-container h2 {
     color: black;
